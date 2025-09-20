@@ -4,6 +4,7 @@ import { buttonStyles } from "../styles/ModalFormStyles";
 import { getErrorSummary, validateAllFields } from "../utils/validation";
 
 const SUBMIT_TEXT = "제출";
+const FOCUS_DELAY = 100;
 
 interface SubmitProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
@@ -30,7 +31,7 @@ export const Submit = ({ children = SUBMIT_TEXT, ...props }: SubmitProps) => {
         if (errorField) {
           errorField.focus();
         }
-      }, 100);
+      }, FOCUS_DELAY);
 
       return;
     }
@@ -44,6 +45,7 @@ export const Submit = ({ children = SUBMIT_TEXT, ...props }: SubmitProps) => {
       type="button"
       onClick={handleClick}
       style={{ ...buttonStyles.base, ...buttonStyles.primary }}
+      aria-label="폼 데이터 제출"
       {...props}
     >
       {children}

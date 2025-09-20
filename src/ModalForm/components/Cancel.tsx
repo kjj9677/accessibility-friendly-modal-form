@@ -21,6 +21,7 @@ export const Cancel = ({ children = CANCEL_TEXT, ...props }: CancelProps) => {
       type="button"
       onClick={handleClick}
       style={{ ...buttonStyles.base, ...buttonStyles.secondary }}
+      aria-label="모달 닫기"
       {...props}
     >
       {children}
