@@ -13,58 +13,41 @@ export const validateField = (value: string, rule: ValidationRule): string => {
   }
 
   if (!value.trim()) {
-    return '';
+    return "";
   }
 
-  if (name === 'name') {
+  if (name === "name") {
     const nameRegex = /^[가-힣a-zA-Z\s]{2,20}$/;
     if (!nameRegex.test(value)) {
-      return '이름은 한글 또는 영문 2-20자로 입력해주세요.';
+      return "이름은 한글 또는 영문 2-20자로 입력해주세요.";
     }
   }
 
-  if (type === 'email') {
+  if (type === "email") {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(value)) {
-      return '올바른 이메일 형식을 입력해주세요. (예: user@example.com)';
-    }
-
-    const commonDomains = [
-      'gmail.com',
-      'naver.com',
-      'daum.net',
-      'kakao.com',
-      'yahoo.com',
-      'outlook.com',
-      'hotmail.com',
-    ];
-    const domain = value.split('@')[1]?.toLowerCase();
-    if (
-      domain &&
-      !commonDomains.some((d) => domain.includes(d.split('.')[0]))
-    ) {
-      console.warn(`일반적이지 않은 이메일 도메인: ${domain}`);
+      return "올바른 이메일 형식을 입력해주세요. (예: user@example.com)";
     }
   }
 
-  if (type === 'tel') {
+  if (type === "tel") {
     const phoneRegex = /^01[0-9]-\d{3,4}-\d{4}$/;
     if (!phoneRegex.test(value)) {
-      return '전화번호는 010-1234-5678 형식으로 입력해주세요.';
+      return "전화번호는 010-1234-5678 형식으로 입력해주세요.";
     }
   }
 
-  return '';
+  return "";
 };
 
 export const validateAllFields = (
   formData: Record<string, string>,
-  fieldRules: ValidationRule[],
+  fieldRules: ValidationRule[]
 ): Record<string, string> => {
   const errors: Record<string, string> = {};
 
   fieldRules.forEach((rule) => {
-    const value = formData[rule.name] || '';
+    const value = formData[rule.name] || "";
     const error = validateField(value, rule);
     if (error) {
       errors[rule.name] = error;
@@ -76,7 +59,7 @@ export const validateAllFields = (
 
 export const getErrorSummary = (errors: Record<string, string>): string => {
   const errorCount = Object.keys(errors).length;
-  if (errorCount === 0) return '';
+  if (errorCount === 0) return "";
 
   const firstError = Object.values(errors)[0];
   return `총 ${errorCount}개의 입력 오류가 있습니다. 첫 번째 오류: ${firstError}`;

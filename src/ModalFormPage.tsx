@@ -15,7 +15,6 @@ const ModalFormPage = () => {
   const handleOpenContactModal = async () => {
     try {
       const result = await openContactModal();
-      console.log("모달 결과:", result);
       setLastResult(result);
 
       if (result) {
