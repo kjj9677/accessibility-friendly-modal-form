@@ -1,23 +1,37 @@
-import { ModalForm } from './ModalForm';
+import { useState } from "react";
+import { openContactModal } from "./utils/openContactModal";
 import {
   descriptionStyle,
   pageStyle,
   titleStyle,
   triggerStyle,
-} from './styles/ModalFormPageStyles';
+} from "./styles/ModalFormPageStyles";
 
 const ModalFormPage = () => {
-  const handleSubmit = (data: Record<string, string>) => {
-    console.log('제출된 데이터:', data);
-    alert(
-      `제출 완료!\n이름: ${data.name}\n이메일: ${data.email}\n전화번호: ${
-        data.phone || '(없음)'
-      }\n메시지: ${data.message || '(없음)'}`,
-    );
-  };
+  const [lastResult, setLastResult] = useState<Record<string, string> | null>(
+    null
+  );
 
-  const handleCancel = () => {
-    console.log('폼이 취소되었습니다.');
+  const handleOpenContactModal = async () => {
+    try {
+      const result = await openContactModal();
+      console.log("모달 결과:", result);
+      setLastResult(result);
+
+      if (result) {
+        alert(
+          `제출 완료!\n이름: ${result.name}\n이메일: ${
+            result.email
+          }\n전화번호: ${result.phone || "(없음)"}\n메시지: ${
+            result.message || "(없음)"
+          }`
+        );
+      } else {
+        alert("모달이 취소되었습니다.");
+      }
+    } catch (error) {
+      console.error("모달 오류:", error);
+    }
   };
 
   return (
@@ -29,46 +43,23 @@ const ModalFormPage = () => {
         폼을 열어보세요.
       </p>
 
-      <ModalForm onSubmit={handleSubmit} onCancel={handleCancel}>
-        <ModalForm.Trigger style={triggerStyle}>
-          연락처 정보 입력
-        </ModalForm.Trigger>
-        <ModalForm.Content>
-          <ModalForm.Header>연락처 정보를 입력해주세요</ModalForm.Header>
-          <ModalForm.Body>
-            <ModalForm.Field
-              name="name"
-              label="이름"
-              required
-              placeholder="홍길동"
-            />
-            <ModalForm.Field
-              name="email"
-              label="이메일"
-              type="email"
-              required
-              placeholder="hong@example.com"
-            />
-            <ModalForm.Field
-              name="phone"
-              label="전화번호"
-              type="tel"
-              placeholder="010-1234-5678"
-            />
-            <ModalForm.Field
-              name="message"
-              label="메시지"
-              as="textarea"
-              placeholder="추가로 전달하고 싶은 내용이 있으시면 작성해주세요."
-              rows={4}
-            />
-          </ModalForm.Body>
-          <ModalForm.Footer>
-            <ModalForm.Cancel>취소</ModalForm.Cancel>
-            <ModalForm.Submit>제출하기</ModalForm.Submit>
-          </ModalForm.Footer>
-        </ModalForm.Content>
-      </ModalForm>
+      <button style={triggerStyle} onClick={handleOpenContactModal}>
+        연락처 정보 입력하기
+      </button>
+
+      {lastResult && (
+        <div
+          style={{
+            marginTop: "24px",
+            padding: "16px",
+            backgroundColor: "#f0f0f0",
+            borderRadius: "8px",
+          }}
+        >
+          <h3>제출된 결과:</h3>
+          <pre>{JSON.stringify(lastResult, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 };
