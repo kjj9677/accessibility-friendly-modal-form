@@ -1,52 +1,87 @@
-## 📋 챌린지 개요
+# 접근성 친화적 모달 폼
 
----
+웹 접근성 표준을 준수하는 모달 폼 컴포넌트 구현 예제입니다. 키보드 탐색, 스크린 리더 지원, 포커스 관리 등 다양한 접근성 기능을 포함하고 있습니다.
 
-React와 TypeScript를 사용하여 접근성을 지원하는 모달폼 컴포넌트를 구현하는 챌린지입니다.
+## 🚀 실행 방법
 
-![접근성 모달폼](preview.gif)
+```bash
+npm install
+npm run dev
+```
 
-## 🛠 기술 스택
+## 🗂 폴더 구조
 
----
+```
+src/
+├── ModalForm/              # 재사용 가능한 모달 폼 컴포넌트
+│   ├── components/         # 개별 컴포넌트들
+│   ├── context/           # Context API
+│   ├── hooks/             # 커스텀 훅
+│   ├── styles/            # 스타일 정의
+│   ├── utils/             # 유틸리티 함수
+│   └── types.ts           # 타입 정의
+├── pages/
+│   └── ModalFormPage/     # 사용 예시 페이지
+│       ├── components/    # 페이지별 컴포넌트
+│       └── index.tsx
+└── utils/
+    └── openContactModal.tsx # 선언적 호출 함수
+```
 
-코드 챌린지는 다음 필수 기술 스택을 포함하여 구현해야 해요.
-UI 라이브러리나 다른 유틸리티 라이브러리 등 추가 기술 스택을 함께 사용하셔도 돼요.
+## ✨ 구현된 접근성 기능
 
-- React
-- TypeScript
+### 키보드 탐색
+- **Tab/Shift+Tab**: 폼 요소 간 순환 탐색
+- **ESC**: 모달 닫기
+- **Enter/Space**: 버튼 활성화
 
-## 🎯 챌린지 목표
+### 포커스 관리
+- 모달 열림 시 제목 요소로 포커스 이동
+- 모달 닫힘 시 트리거 버튼으로 포커스 복원
+- 탭 트랩 (모달 내에서만 포커스 순환)
 
-- 프로젝트는 `npm run dev` || `yarn dev` || `pnpm dev`로 실행 가능해요.
-- 코드의 구현은 `ModalFormPage.tsx` 파일에서부터 진행해주세요. 구조의 변경이 필요한 경우 자유롭게 진행해주셔도 돼요.
+### 스크린 리더 지원
+- **ARIA 속성**: `aria-modal`, `aria-labelledby`, `aria-describedby`
+- **Live Region**: 유효성 검사 오류 즉시 알림
+- **Role 속성**: 적절한 의미 전달
 
----
+### 유효성 검사
+- 실시간 필드 검증
+- 제출 과정에서 오류 발생 시 첫 번째 오류 필드로 포커스 이동
+- 스크린 리더용 오류 요약 메시지
 
-### 구현 요구사항
+### 사용성 개선
+- 모달 열림 시 배경 스크롤 방지
+- `prefers-reduced-motion` 설정 고려한 애니메이션
+- 오버레이 클릭으로 모달 닫기
 
-- **모달 닫기**
-  - ESC 키 입력 또는 바깥 영역(overlay) 클릭 시 모달이 닫혀야 해요.
-- **포커스 흐름**
-  - 모달이 열리면 모달의 제목 요소로 포커스가 이동해야 하고, 닫히면 원래 버튼(트리거)으로 포커스가 돌아와야 해요.
-  - Tab 키로 다음 요소로, Shift+Tab 키로 이전 요소로 이동할 수 있어야 해요.
-- **폼 사용성**
-  - 키보드만으로 입력하고 제출할 수 있어야 해요.
-  - 제출 시 유효성 검증이 실패하면 오류 메시지가 표시되고, 스크린리더 사용자에게 즉시 전달되어야 해요
-    - 검증을 위해 이메일 등 최소 한 개 이상의 필드에 유효성 검사가 포함되어야 해요.
-- **UI/UX**
-  - 모달이 열려 있을 때는 배경이 스크롤되지 않도록 막아야 해요.
-  - 모달 안의 내용이 길어지면 내부에서 스크롤할 수 있어야 해요.
-- **접근성**
-  - `aria-modal`, `aria-labelledby`, `aria-describedby` 같은 기본 속성을 챙겨주세요.
-  - 애니메이션은 `prefers-reduced-motion` 설정을 고려해 주면 더 좋아요.
-- **선언적 호출**
-  - 모달은 함수 호출을 통해 선언적으로 열 수 있어야 해요.
-    - 예시로 `const result = await openFormModal()` 형태로 사용 가능해야 하며,
-    - 제출 완료 시 입력값이 반환되고, 취소/닫기 시 `null`이 반환되어야 해요.
+## 🔧 재사용성 설계
 
-## ⏱ 예상 소요 시간
+### Context API 패턴
+```typescript
+const { formData, setFormData, errors, close } = useModalForm();
+```
 
----
+### 선언적 호출 방식
+```typescript
+const result = await openContactModal();
+if (result) {
+  console.log('제출된 데이터:', result);
+}
+```
 
-2시간
+### 합성 컴포넌트 기반 구조
+```jsx
+  <ModalForm.Content>
+    <ModalForm.Header>제목</ModalForm.Header>
+    <ModalForm.Body>
+      <ModalForm.Field name="email" label="이메일" required />
+    </ModalForm.Body>
+    <ModalForm.Footer>
+      <ModalForm.Cancel />
+      <ModalForm.Submit />
+    </ModalForm.Footer>
+  </ModalForm.Content>
+```
+
+
