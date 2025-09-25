@@ -29,7 +29,6 @@ export const Submit = ({ children = SUBMIT_TEXT, ...props }: SubmitProps) => {
         const errorField = document.querySelector(
           `input[name="${firstErrorField}"], textarea[name="${firstErrorField}"]`
         ) as HTMLElement;
-        console.log(errorField);
         if (errorField) {
           errorField.focus();
         }
