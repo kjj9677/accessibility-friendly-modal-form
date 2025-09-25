@@ -1,10 +1,11 @@
 import type React from "react";
-import { useModalForm } from "../context/useModalForm";
+import { useModalForm } from "../hooks/useModalForm";
 import { buttonStyles } from "../styles/ModalFormStyles";
 import { getErrorSummary, validateAllFields } from "../utils/validation";
 
 const SUBMIT_TEXT = "제출";
 const FOCUS_DELAY = 100;
+const BUTTON_ARIA_LABEL = "폼 데이터 제출";
 
 interface SubmitProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
@@ -28,6 +29,7 @@ export const Submit = ({ children = SUBMIT_TEXT, ...props }: SubmitProps) => {
         const errorField = document.querySelector(
           `input[name="${firstErrorField}"], textarea[name="${firstErrorField}"]`
         ) as HTMLElement;
+        console.log(errorField);
         if (errorField) {
           errorField.focus();
         }
@@ -45,7 +47,7 @@ export const Submit = ({ children = SUBMIT_TEXT, ...props }: SubmitProps) => {
       type="button"
       onClick={handleClick}
       style={{ ...buttonStyles.base, ...buttonStyles.primary }}
-      aria-label="폼 데이터 제출"
+      aria-label={BUTTON_ARIA_LABEL}
       {...props}
     >
       {children}

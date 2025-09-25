@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { ModalForm } from "./ModalForm";
-import { useModalForm } from "./ModalForm/context/useModalForm";
+import { ModalForm } from "../../../ModalForm";
+import { useModalForm } from "../../../ModalForm/hooks/useModalForm";
 
 interface ContactFormProps {
   onSubmit: (data: Record<string, string>) => void;

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { openContactModal } from "./utils/openContactModal";
+import { openContactModal } from "../../utils/openContactModal";
 import {
   descriptionStyle,
   pageStyle,
   titleStyle,
   triggerStyle,
-} from "./styles/ModalFormPageStyles";
+} from "../../styles/ModalFormPageStyles";
 
 const ModalFormPage = () => {
   const [lastResult, setLastResult] = useState<Record<string, string> | null>(
@@ -25,8 +25,6 @@ const ModalFormPage = () => {
             result.message || "(없음)"
           }`
         );
-      } else {
-        alert("모달이 취소되었습니다.");
       }
     } catch (error) {
       console.error("모달 오류:", error);

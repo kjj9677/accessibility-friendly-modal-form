@@ -1,5 +1,5 @@
-import type React from 'react';
-import { useModalForm } from '../context/useModalForm';
+import type React from "react";
+import { useModalForm } from "../hooks/useModalForm";
 
 interface TriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;

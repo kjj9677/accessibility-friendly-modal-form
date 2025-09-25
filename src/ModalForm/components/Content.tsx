@@ -1,8 +1,8 @@
-import type React from 'react';
-import { useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
-import { useModalForm } from '../context/useModalForm';
-import { contentStyles } from '../styles/ModalFormStyles';
+import type React from "react";
+import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+import { useModalForm } from "../hooks/useModalForm";
+import { contentStyles } from "../styles/ModalFormStyles";
 
 interface ContentProps {
   children: React.ReactNode;
@@ -16,13 +16,13 @@ export const Content = ({ children }: ContentProps) => {
     if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         close();
       }
 
-      if (e.key === 'Tab') {
+      if (e.key === "Tab") {
         const focusableElements = contentRef.current?.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         );
 
         if (!focusableElements || focusableElements.length === 0) return;
@@ -46,11 +46,13 @@ export const Content = ({ children }: ContentProps) => {
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, close]);
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -59,7 +61,7 @@ export const Content = ({ children }: ContentProps) => {
   };
 
   const handleOverlayKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       if (e.target === e.currentTarget) {
         close();
       }
@@ -87,6 +89,6 @@ export const Content = ({ children }: ContentProps) => {
         {children}
       </div>
     </div>,
-    document.body,
+    document.body
   );
 };

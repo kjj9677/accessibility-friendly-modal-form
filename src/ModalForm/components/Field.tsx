@@ -1,6 +1,6 @@
 import type React from "react";
 import { useEffect, useId } from "react";
-import { useModalForm } from "../context/useModalForm";
+import { useModalForm } from "../hooks/useModalForm";
 import { fieldStyles } from "../styles/ModalFormStyles";
 import type { FieldProps } from "../types";
 import { validateField } from "../utils/validation";
@@ -58,6 +58,7 @@ export const Field = ({
           style={fieldStyles.input(hasError)}
           aria-describedby={errors[name] ? errorId : undefined}
           aria-invalid={hasError}
+          name={name}
           {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
         />
       ) : (
@@ -68,6 +69,7 @@ export const Field = ({
           style={fieldStyles.input(hasError)}
           aria-describedby={errors[name] ? errorId : undefined}
           aria-invalid={hasError}
+          name={name}
           {...props}
         />
       )}

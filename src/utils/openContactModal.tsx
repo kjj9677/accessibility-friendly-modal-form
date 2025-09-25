@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { ContactForm } from "../ContactForm";
+import { ContactForm } from "../pages/ModalFormPage/components/ContactForm";
 
 export const openContactModal = (): Promise<Record<string, string> | null> => {
   return new Promise((resolve) => {
