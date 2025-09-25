@@ -1,9 +1,9 @@
-import { createContext, useEffect, useId, useRef, useState } from 'react';
-import type { ModalFormContextValue, ModalFormProps } from '../types';
-import type { ValidationRule } from '../utils/validation';
+import { createContext, useEffect, useId, useRef, useState } from "react";
+import type { ModalFormContextValue, ModalFormProps } from "../types";
+import type { ValidationRule } from "../utils/validation";
 
 export const ModalFormContext = createContext<ModalFormContextValue | null>(
-  null,
+  null
 );
 
 export const ModalFormProvider = ({
@@ -26,7 +26,7 @@ export const ModalFormProvider = ({
     setFormData({});
     setErrors({});
     setFieldRules([]);
-    setTimeout(() => triggerRef.current?.focus(), 0);
+    triggerRef.current?.focus();
   };
 
   const registerField = (rule: ValidationRule) => {
@@ -42,7 +42,7 @@ export const ModalFormProvider = ({
       announcementRef.current.textContent = message;
       setTimeout(() => {
         if (announcementRef.current) {
-          announcementRef.current.textContent = '';
+          announcementRef.current.textContent = "";
         }
       }, 1000);
     }
@@ -50,14 +50,14 @@ export const ModalFormProvider = ({
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => headerRef.current?.focus(), 0);
+      document.body.style.overflow = "hidden";
+      headerRef.current?.focus();
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
 
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
 
@@ -87,11 +87,11 @@ export const ModalFormProvider = ({
         aria-live="assertive"
         aria-atomic="true"
         style={{
-          position: 'absolute',
-          left: '-10000px',
-          width: '1px',
-          height: '1px',
-          overflow: 'hidden',
+          position: "absolute",
+          left: "-10000px",
+          width: "1px",
+          height: "1px",
+          overflow: "hidden",
         }}
       />
     </ModalFormContext.Provider>

@@ -24,7 +24,7 @@ export const descriptionStyle: React.CSSProperties = {
   color: "#6b7280",
   marginBottom: "32px",
   textAlign: "center",
-  maxWidth: "600px",
+  maxWidth: "612px",
   lineHeight: 1.6,
 };
 
