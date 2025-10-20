@@ -22,7 +22,7 @@ export const Content = ({ children }: ContentProps) => {
 
       if (e.key === "Tab") {
         const focusableElements = contentRef.current?.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
         );
 
         if (!focusableElements || focusableElements.length === 0) return;
@@ -80,7 +80,7 @@ export const Content = ({ children }: ContentProps) => {
     >
       <div
         ref={contentRef}
-        className="modal-content"
+        className="modal-content hide-scrollbar"
         style={contentStyles.modal}
         role="dialog"
         aria-modal="true"
