@@ -1,15 +1,16 @@
-import { useState } from "react";
-import { openContactModal } from "../../utils/openContactModal";
+import { useState } from 'react';
+import { useImperativeModal } from '../../contexts/ImperativeModalContext';
 import {
   descriptionStyle,
   pageStyle,
   titleStyle,
   triggerStyle,
-} from "../../styles/ModalFormPageStyles";
+} from '../../styles/ModalFormPageStyles';
 
 const ModalFormPage = () => {
+  const { openContactModal } = useImperativeModal();
   const [lastResult, setLastResult] = useState<Record<string, string> | null>(
-    null
+    null,
   );
 
   const handleOpenContactModal = async () => {
@@ -21,13 +22,13 @@ const ModalFormPage = () => {
         alert(
           `제출 완료!\n이름: ${result.name}\n이메일: ${
             result.email
-          }\n전화번호: ${result.phone || "(없음)"}\n메시지: ${
-            result.message || "(없음)"
-          }`
+          }\n전화번호: ${result.phone || '(없음)'}\n메시지: ${
+            result.message || '(없음)'
+          }`,
         );
       }
     } catch (error) {
-      console.error("모달 오류:", error);
+      console.error('모달 오류:', error);
     }
   };
 
@@ -47,10 +48,10 @@ const ModalFormPage = () => {
       {lastResult && (
         <div
           style={{
-            marginTop: "24px",
-            padding: "16px",
-            backgroundColor: "#f0f0f0",
-            borderRadius: "8px",
+            marginTop: '24px',
+            padding: '16px',
+            backgroundColor: '#f0f0f0',
+            borderRadius: '8px',
           }}
         >
           <h3>제출된 결과:</h3>
