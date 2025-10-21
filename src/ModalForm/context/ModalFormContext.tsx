@@ -2,6 +2,9 @@ import { createContext, useEffect, useId, useRef, useState } from "react";
 import type { ModalFormContextValue, ModalFormProps } from "../types";
 import type { ValidationRule } from "../utils/validation";
 
+const ANNOUNCEMENT_DELAY = 500;
+const EMPTY_STRING = "";
+
 export const ModalFormContext = createContext<ModalFormContextValue | null>(
   null
 );
@@ -42,9 +45,9 @@ export const ModalFormProvider = ({
       announcementRef.current.textContent = message;
       setTimeout(() => {
         if (announcementRef.current) {
-          announcementRef.current.textContent = "";
+          announcementRef.current.textContent = EMPTY_STRING;
         }
-      }, 1000);
+      }, ANNOUNCEMENT_DELAY);
     }
   };
 
@@ -53,11 +56,11 @@ export const ModalFormProvider = ({
       document.body.style.overflow = "hidden";
       headerRef.current?.focus();
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = EMPTY_STRING;
     }
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = EMPTY_STRING;
     };
   }, [isOpen]);
 
@@ -86,13 +89,7 @@ export const ModalFormProvider = ({
         ref={announcementRef}
         aria-live="assertive"
         aria-atomic="true"
-        style={{
-          position: "absolute",
-          left: "-10000px",
-          width: "1px",
-          height: "1px",
-          overflow: "hidden",
-        }}
+        className="sr-only"
       />
     </ModalFormContext.Provider>
   );
